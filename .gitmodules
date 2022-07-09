@@ -1,0 +1,3 @@
+[submodule "common-framework"]
+	path = common-framework
+	url = https://github.com/v-genchev/common-framework.git
