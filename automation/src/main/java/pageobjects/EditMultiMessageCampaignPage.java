@@ -19,7 +19,7 @@ public class EditMultiMessageCampaignPage extends EditCampaignPage {
     @FindBy(xpath = "//a[contains(@class, nav-item)]//div[@class='tab']")
     public List<WebElement> editSectionTabs;
 
-    private final By tabDescriptionsLocator = By.xpath(".//div[@class='desc']");
+    private final By tabNonEmptyDescriptionsLocator = By.xpath(".//div[@class='desc' and string-length()>0]");
     private final By tabTitleLocator = By.xpath(".//p[@class='title']//span");
 
     public EditMultiMessageCampaignPage(DynamicDriverManager driverManager) {
@@ -41,7 +41,7 @@ public class EditMultiMessageCampaignPage extends EditCampaignPage {
     }
 
     protected List<String> getTabDescription(String tabName){
-        List<WebElement> tabDescriptionElements = getTab(tabName).findElements(this.tabDescriptionsLocator);
+        List<WebElement> tabDescriptionElements = getTab(tabName).findElements(this.tabNonEmptyDescriptionsLocator);
         return getElementsText(tabDescriptionElements);
     }
 

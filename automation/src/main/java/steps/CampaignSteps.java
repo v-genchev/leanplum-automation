@@ -1,17 +1,17 @@
 package steps;
 
 import drivermanager.DynamicDriverManager;
+import helpers.VariableTransformer;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import org.testng.Assert;
 import pageobjects.CampaignsPage;
 import pageobjects.EditCampaignPage;
 import pageobjects.EditMultiMessageCampaignPage;
-import pageobjects.components.CreateCampaignModalComponent;
-import pageobjects.components.DeliveryComponent;
-import pageobjects.components.ChooseTemplateComponent;
-import pageobjects.components.RecurringDeliveryComponent;
+import pageobjects.components.*;
 
 import java.util.List;
+import java.util.Map;
 
 public class CampaignSteps {
 
@@ -44,6 +44,7 @@ public class CampaignSteps {
 
     @And("^I verify (Target Audience|Delivery Method|Actions) section summary:")
     public void verifySectionSummary(String section, List<String> expectedSummary) {
+        expectedSummary = VariableTransformer.transformList(expectedSummary, "dd MMM yyyy");
         EditMultiMessageCampaignPage editCampaignPage = new EditMultiMessageCampaignPage(driverManger);
         List<String> actualSummary = editCampaignPage.getTabContents(section);
         Assert.assertEquals(actualSummary, expectedSummary, String.format("%s section Summary not as expected", section));
@@ -57,11 +58,12 @@ public class CampaignSteps {
 
     @And("^I want the (?:.*)delivery to (?:(Start(?: on| immediately after publish)) (.*?))?(?: in (.*?))?(?: at (.*? (?:AM|PM)))?$")
     public void setStart(String when, String date, String timeOption, String time) {
+        String transformedDate = VariableTransformer.transformSingleValue(date);
         DeliveryComponent deliveryComponent = new DeliveryComponent(driverManger);
         if(when != null && !deliveryComponent.getDeliveryType().equals("Recurring")){
             deliveryComponent.setStartOption(when);
         }
-        if(date != null) { deliveryComponent.setStartDate(date); }
+        if(date != null) { deliveryComponent.setStartDate(transformedDate); }
         if(timeOption != null) { deliveryComponent.setStartTimeOption(timeOption); }
         if(time != null) { deliveryComponent.setStartTime(time); }
     }
@@ -92,6 +94,37 @@ public class CampaignSteps {
     public void navigateToStep(String stepSubTab) {
         EditCampaignPage editCampaignPage = new EditCampaignPage(driverManger);
         editCampaignPage.navigateToStep(stepSubTab);
+    }
+
+    @And("^I set action main (.*) text to (.*)$")
+    public void setActionTextInput(String inputLabel, String inputText) {
+        ActionComponent actionComponent = new ActionComponent(driverManger);
+        actionComponent.populateTextInput(inputLabel, inputText);
+    }
+
+    @And("^I (Edit|Preview & Test|Localize) the Action$")
+    @And("^I go to Action (Edit|Preview & Test|Localize|Templates)$")
+    public void selectActionButton(String buttonText) {
+        ActionComponent actionComponent = new ActionComponent(driverManger);
+        actionComponent.clickButtonByText(buttonText);
+    }
+
+    @And("^I verify push notification content preview message is (.*)$")
+    public void verifyContentPreviewMessage(String expectedMessage) {
+        PushNotificationAction pushNotificationAction = new PushNotificationAction(driverManger);
+        Assert.assertEquals(pushNotificationAction.getContentPreviewMessage(), expectedMessage,
+                "Actual message different than the expected");
+    }
+
+    @And("^I (review|publish) the campaign$")
+    public void previewCampaign(String action) {
+        EditCampaignPage editCampaignPage = new EditCampaignPage(driverManger);
+        if(action.equals("review")){
+            editCampaignPage.reviewCampaign();
+        }
+        else{
+            editCampaignPage.publishCampaign();
+        }
     }
 
 }

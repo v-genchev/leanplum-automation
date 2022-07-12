@@ -78,6 +78,7 @@ public class DeliveryComponent extends Component {
     public void setEndType(String option){
         endTypeInput.click();
         DropdownPopup dropdown = new DropdownPopup(driverManager);
-        dropdown.selectOption(option);
+        dropdown.selectOption(option, 150);
+        waitForElementTextToBe(endTypeInput, option);
     }
 }
