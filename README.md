@@ -1,6 +1,6 @@
 # Leanplum app automation
 
-Framework for the Lenplum app. Uses the common-framework as a submodule
+Framework for the Lenplum app. Uses the common-framework as a submodule 
 
 ## Requirements
 
@@ -11,6 +11,9 @@ Framework for the Lenplum app. Uses the common-framework as a submodule
      leading to flaky tests. The last version of chromedriver that this was 
      tesed on was 102 but 104 onwards should also be fine
     ```
+   Issue is mentioned [here](https://bugs.chromium.org/p/chromedriver/issues/detail?id=4121) 
+
+
 3. There are some [good implementations](https://github.com/bonigarcia/webdrivermanager) throughout the internet 
 for managing the drivers without the need for downloading them manually. 
 If requested, implementation will be adjusted accordingly.
