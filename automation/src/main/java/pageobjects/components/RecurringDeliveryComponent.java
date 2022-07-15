@@ -20,6 +20,7 @@ public class RecurringDeliveryComponent extends DeliveryComponent {
     }
 
     public void setRepeatValues(String number, String period){
+        waitForElementToBeClickable(repeatEveryPeriodInput);
         repeatEveryPeriodInput.click();
         DropdownPopup dropdown = new DropdownPopup(driverManager);
         dropdown.selectOption(period);

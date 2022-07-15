@@ -113,17 +113,30 @@ public class CampaignSteps {
     public void verifyContentPreviewMessage(String expectedMessage) {
         PushNotificationAction pushNotificationAction = new PushNotificationAction(driverManger);
         Assert.assertEquals(pushNotificationAction.getContentPreviewMessage(), expectedMessage,
-                "Actual message different than the expected");
+                "Actual push notification content message different than the expected");
     }
 
-    @And("^I (review|publish) the campaign$")
+    @And("^I (?:verify|check) campaign current status is (.*)$")
+    public void verifyCampaignCurrentStatus(String expectedStatus) {
+        EditCampaignPage editCampaignPage = new EditCampaignPage(driverManger);
+        Assert.assertEquals(editCampaignPage.getCampaignCurrentStatus(), expectedStatus,
+                "Actual campaign status different than expected");
+    }
+
+    @And("^I verify campaign summary items:")
+    public void verifyCampaignSummary(List<String> summaryHeaders){
+        EditCampaignPage editCampaignPage = new EditCampaignPage(driverManger);
+        Assert.assertEquals(editCampaignPage.getSummaryHeaders(), summaryHeaders,
+                "Summary items different than expected");
+    }
+
+    @And("^I (review|publish|finish) the campaign$")
     public void previewCampaign(String action) {
         EditCampaignPage editCampaignPage = new EditCampaignPage(driverManger);
-        if(action.equals("review")){
-            editCampaignPage.reviewCampaign();
-        }
-        else{
-            editCampaignPage.publishCampaign();
+        switch (action){
+            case "review": editCampaignPage.reviewCampaign(); break;
+            case "publish": editCampaignPage.publishCampaign(); break;
+            case "finish": editCampaignPage.finishCampaign(); break;
         }
     }
 

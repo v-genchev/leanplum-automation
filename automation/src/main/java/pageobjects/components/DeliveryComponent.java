@@ -31,9 +31,11 @@ public class DeliveryComponent extends Component {
     @FindBy(xpath = "//div[@data-testid='start-date-picker']//label[contains(@class, 'time-picker')]//input")
     public WebElement startTimeInput;
 
-
     @FindBy(xpath = "//div[@class='option-box end']/div[contains(@class, 'dropdowninput')]")
     public WebElement endTypeInput;
+
+    @FindBy(xpath =  "//div[contains(@class,'anchored-popup-content')]")
+    public WebElement currentPopupContent;
 
 
     public DeliveryComponent(DynamicDriverManager driverManager) {
@@ -67,6 +69,7 @@ public class DeliveryComponent extends Component {
         startTimeInput.click();
         typeWithClear(startTimeInput, time + Keys.ENTER);
         waitForElementValueToBe(startTimeInput, time);
+        waitForElementToDissapear(currentPopupContent);
     }
 
     public void setStartTimeOption(String option){

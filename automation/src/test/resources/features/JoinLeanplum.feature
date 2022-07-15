@@ -7,7 +7,6 @@ Feature: Create Campaign
     And I select menu Login
     And I login with email _Config_[user.email] and password _Config_[user.password]
     And I close the initial overlay message
-    And I verify page title is Campaigns — Leanplum
 
   Scenario: Schedule and start a campaign with a push message.
 
@@ -36,7 +35,15 @@ Feature: Create Campaign
     And I verify Actions section summary:
       | ACTIONS: PUSH NOTIFICATION |
       | 1 action                   |
-    And I review the campaign
+    And I check campaign current status is DRAFT
+    When I review the campaign
+    And I verify campaign summary items:
+      | Target Audience: 100% of all Users |
+      | Delivery Method: Recurring         |
+      | Actions: Push Notification         |
     And I publish the campaign
+    And I check campaign current status is PUBLISHED
+    And I finish the campaign
+    Then I verify campaign current status is FINISHED
 
     * I stop the browser

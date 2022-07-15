@@ -11,7 +11,9 @@ Framework for the Lenplum app. Uses the common-framework as a submodule
      leading to flaky tests. The last version of chromedriver that this was 
      tesed on was 102 but 104 onwards should also be fine
     ```
-   Issue is mentioned [here](https://bugs.chromium.org/p/chromedriver/issues/detail?id=4121) 
+   - Issue is mentioned [here](https://bugs.chromium.org/p/chromedriver/issues/detail?id=4121)
+   - If you really cannot downgrade your chrome version, it is recommended to use geckodriver and firefox, otherwise
+     you would need to set up some kind of sleep where the execution fails.
 
 
 3. There are some [good implementations](https://github.com/bonigarcia/webdrivermanager) throughout the internet 
@@ -61,4 +63,4 @@ If requested, implementation will be adjusted accordingly.
 ### Plans for future implementation
    - Remote WebDriver implementation in the common-framework
    - Simple CI pipeline using selenium standalone docker container
-   - Integrate Allure reports to use instead of the ones that cucumber and testng produce
+   - Integrate Allure reports to use instead of the ones that Cucumber and TestNG produce
