@@ -1,4 +1,4 @@
-# Leanplum app automation
+# Leanplum app automation [![Leanplum Automation Tests](https://github.com/v-genchev/leanplum-automation/actions/workflows/maven.yml/badge.svg)](https://github.com/v-genchev/leanplum-automation/actions/workflows/maven.yml)
 
 Framework for the Lenplum app. Uses the common-framework as a submodule 
 
@@ -73,5 +73,5 @@ If requested, implementation will be adjusted accordingly.
    Keep in mind that the remote.driver.url property may be different depending on how you set up your container.
 
 ### Plans for future implementation
-   - Simple CI pipeline using selenium standalone docker container
    - Integrate Allure reports to use instead of the ones that Cucumber and TestNG produce
+   - Ability to upload the reports to GitHub Pages after the workflow execution
