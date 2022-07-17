@@ -66,6 +66,7 @@ public class DeliveryComponent extends Component {
     }
 
     public void setStartTime(String time){
+        waitForElementToBeClickable(startTimeInput);
         startTimeInput.click();
         typeWithClear(startTimeInput, time + Keys.ENTER);
         waitForElementValueToBe(startTimeInput, time);
@@ -81,7 +82,7 @@ public class DeliveryComponent extends Component {
     public void setEndType(String option){
         endTypeInput.click();
         DropdownPopup dropdown = new DropdownPopup(driverManager);
-        dropdown.selectOption(option, 150);
+        dropdown.selectOption(option, 200);
         waitForElementTextToBe(endTypeInput, option);
     }
 }
