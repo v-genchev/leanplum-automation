@@ -12,8 +12,8 @@ Framework for the Lenplum app. Uses the common-framework as a submodule
      tesed on was 102 but 104 onwards should also be fine
     ```
    - Issue is mentioned [here](https://bugs.chromium.org/p/chromedriver/issues/detail?id=4121)
-   - If you really cannot downgrade your chrome version, it is recommended to use geckodriver and firefox, otherwise
-     you would need to set up some kind of sleep where the execution fails.
+   - If you really cannot downgrade your Chrome version, it is recommended to use geckodriver and firefox, otherwise
+     you would need to set the headless option to true in config.properties
 
 
 3. There are some [good implementations](https://github.com/bonigarcia/webdrivermanager) throughout the internet 
@@ -60,7 +60,18 @@ If requested, implementation will be adjusted accordingly.
    - You can specify custom tags in config.properties file - cucumber.tags=not @skip and @myCustomTag - all features with these tags will be executed
    - Reports produced by TestNG and Cucumber can be found in the target folder after execution.
 
+## Running test cases on a Docker container
+1. Basic RemoteWebdriver support is added to the common-framework. For now only the latest version of chrome-standalone was tested.
+2. If you want to run these tests on a docker container - read [this](https://github.com/SeleniumHQ/docker-selenium). 
+   You should also update the config.properties like this:
+   ```properties
+   env.execution = remote
+   browser=chrome
+   headless = true
+   remote.driver.url = http://localhost:4444/wd/hub
+   ```
+   Keep in mind that the remote.driver.url property may be different depending on how you set up your container.
+
 ### Plans for future implementation
-   - Remote WebDriver implementation in the common-framework
    - Simple CI pipeline using selenium standalone docker container
    - Integrate Allure reports to use instead of the ones that Cucumber and TestNG produce
